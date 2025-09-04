@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Generador de factura PDF profesional">
+    <meta name="robots" content="index, follow">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador Factura PDF</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <link rel="stylesheet" href="./style.css">
+    <script type="module" src="./main.js"></script>
+</head>
+<body>
+    <div class="page-container">
+        <header>
+            <div class="container">
+                <h1>Generador de Facturas</h1>
+                <p class="subtitle">Sistema profesional de facturación por productos y servicios</p>
+            </div>
+        </header>
+
+        <main>
+            <div class="form-container">
+                <form id="facturaForm" action="phps/guardarFactura.php" method="POST">
+                    
+                    <!-- === DATOS DEL CLIENTE === -->
+                    <fieldset>
+                        <legend>
+                            <div class="legend-icon">👤</div>
+                            <h3>Datos del Cliente</h3>
+                        </legend>
+                        <div class="fieldset-content">
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="nombres">Nombres</label>
+                                    <input type="text" id="nombres" name="nombres" 
+                                           placeholder="Nombres del cliente" required>
+                                </div>
+                                <div class="form-group">
+                                    <label for="apellidos">Apellidos</label>
+                                    <input type="text" id="apellidos" name="apellidos" 
+                                           placeholder="Apellidos del cliente" required>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-group">
+                                    <label for="celular">Teléfono / Celular</label>
+                                    <input type="text" id="celular" name="celular" 
+                                           placeholder="Número de contacto">
+                                </div>
+                                <div class="form-group">
+                                    <label for="correo">Correo Electrónico</label>
+                                    <input type="email" id="correo" name="correo" 
+                                           placeholder="correo@ejemplo.com" required>
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- === PRODUCTOS Y SERVICIOS === -->
+                    <fieldset>
+                        <legend>Productos</legend>
+  
+                        <!-- Contenedor dinámico de productos -->
+                        <div id="productos-container"></div>
+  
+                        <!-- Botón para añadir más productos -->
+                        <button type="button" id="addProducto">Agregar Producto</button>
+                    </fieldset>
+
+
+
+                    <!-- === TOTALES === -->
+                    <fieldset>
+                        <legend>
+                            <div class="legend-icon">💰</div>
+                            <h3>Resumen de Totales</h3>
+                        </legend>
+                        <div class="fieldset-content">
+                            <div class="totales-grid">
+                                <div class="total-item">
+                                    <span>Subtotal:</span>
+                                    <span id="totalSinDescuento" class="total-value">$0</span>
+                                    <input type="hidden" name="total_subtotal" id="inputTotalSinDescuento">
+                                </div>
+                                <div class="total-item">
+                                    <span>Total Descuentos:</span>
+                                    <span id="totalDescuentos" class="total-value">$0</span>
+                                    <input type="hidden" name="total_descuentos" id="inputTotalDescuentos">
+                                </div>
+                                <div class="total-item">
+                                    <span>Total Final:</span>
+                                    <span id="totalFinal" class="total-value">$0</span>
+                                    <input type="hidden" name="total_final" id="inputTotalFinal">
+                                </div>
+                            </div>
+                        </div>
+                    </fieldset>
+
+
+                    <!-- === OBSERVACIONES === -->
+                    <fieldset>
+                        <legend>
+                            <div class="legend-icon">📝</div>
+                            <h3>Observaciones Generales</h3>
+                        </legend>
+                        <div class="fieldset-content">
+                            <div class="form-group mb-0">
+                                <label for="observacionFactura">Notas adicionales</label>
+                                <textarea id="observacionFactura" name="observacionFactura" 
+                                          placeholder="Términos de pago, condiciones especiales, notas adicionales..."></textarea>
+                            </div>
+                        </div>
+                    </fieldset>
+
+                    <!-- === BOTÓN DE ENVÍO === -->
+                    <input type="submit" id="btnGuardarFactura" 
+                           value="💾 Guardar y Generar Factura" 
+                           formaction="./phps/guardarFactura.php">
+                    
+                </form>
+            </div>
+        </main>
+
+        <footer>
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>Enterprise Solution</h3>
+                    <p>Sistema profesional de facturación desarrollado para optimizar la gestión de ventas y servicios de tu empresa.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>Políticas y Privacidad</h3>
+                    <p>Al utilizar este sistema, aceptas nuestros términos de uso y políticas de privacidad. Todos los datos son tratados con máxima confidencialidad.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Script para iconos dinámicos (Optimizado: Agregado role="alert" para notificaciones) -->
+    <script>
+        // Agregar iconos a notificaciones dinámicamente
+        document.addEventListener('DOMContentLoaded', function() {
+            const observer = new MutationObserver(function(mutations) {
+                mutations.forEach(function(mutation) {
+                    mutation.addedNodes.forEach(function(node) {
+                        if (node.nodeType === 1 && node.classList.contains('notificacion')) {
+                            const icon = document.createElement('div');
+                            icon.className = 'notificacion-icon';
+                            
+                            if (node.classList.contains('notificacion-success')) {
+                                icon.textContent = '✅';
+                            } else if (node.classList.contains('notificacion-error')) {
+                                icon.textContent = '❌';
+                            } else if (node.classList.contains('notificacion-info')) {
+                                icon.textContent = '';
+                            }
+                            
+                            node.insertBefore(icon, node.firstChild);
+                            node.setAttribute('role', 'alert');
+                        }
+                    });
+                });
+            });
+            
+            observer.observe(document.body, { childList: true, subtree: true });
+        });
+    </script>
+</body>
+</html>

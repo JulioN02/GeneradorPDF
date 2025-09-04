@@ -1,0 +1,154 @@
+:root {
+  --color-primary: #2563eb;
+  --color-primary-dark: #1e40af;
+  --color-accent: #16a34a;
+  --color-danger: #dc2626;
+  --color-text: #111827;
+  --color-text-light: #6b7280;
+  --color-bg: #ffffff;
+  --radius: 8px;
+}
+
+body {
+  font-family: "Inter", DejaVu Sans, sans-serif;
+  font-size: 12px;
+  color: var(--color-text);
+  margin: 20px;
+  background: var(--color-bg);
+}
+
+header {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 2px solid var(--color-primary);
+  padding-bottom: 10px;
+  margin-bottom: 20px;
+}
+
+header .empresa h1 {
+  margin: 0;
+  font-size: 20px;
+  color: var(--color-primary-dark);
+}
+
+header .empresa .slogan {
+  font-size: 12px;
+  color: var(--color-text-light);
+}
+
+header .factura-info {
+  text-align: right;
+}
+
+h2, h3 {
+  margin: 5px 0;
+  color: var(--color-primary-dark);
+}
+
+.cliente {
+  margin-bottom: 15px;
+  background: #f9fafb;
+  padding: 10px;
+  border-radius: var(--radius);
+  border: 1px solid #e5e7eb;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 15px;
+}
+
+table th {
+  background: var(--color-primary);
+  color: white;
+  text-align: center;
+}
+
+table, th, td {
+  border: 1px solid #d1d5db;
+}
+
+th, td {
+  padding: 6px;
+  font-size: 11px;
+}
+
+.productos td {
+  text-align: center;
+}
+
+.totales {
+  margin-top: 20px;
+  width: 40%;
+  float: right;
+}
+
+.totales table {
+  width: 100%;
+  border: none;
+}
+
+.totales td {
+  border: none;
+  padding: 5px;
+  text-align: right;
+}
+
+.totales td.descuento {
+  color: var(--color-danger);
+}
+
+.totales tr.total-final td {
+  font-size: 14px;
+  font-weight: bold;
+  border-top: 2px solid var(--color-primary-dark);
+  color: var(--color-primary-dark);
+}
+
+.observaciones {
+  clear: both;
+  margin-top: 30px;
+  font-size: 11px;
+  padding: 10px;
+  background: #f9fafb;
+  border-radius: var(--radius);
+  border: 1px solid #e5e7eb;
+}
+
+footer {
+  margin-top: 40px;
+  text-align: center;
+  font-size: 10px;
+  border-top: 1px solid #e5e7eb;
+  padding-top: 10px;
+  color: var(--color-text-light);
+}
+
+/* === Cliente === */
+.tabla-cliente {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 11px;
+}
+
+.tabla-cliente td {
+  padding: 4px 6px;
+  border: none;
+  text-align: left;
+  vertical-align: top;
+}
+
+/* === Productos === */
+.productos td:nth-child(2) {
+  text-align: left; /* el nombre del producto alineado a la izquierda */
+}
+
+.productos td, .productos th {
+  text-align: center;
+}
+
+/* Totales más destacados */
+.totales table td:first-child {
+  text-align: left;
+}
